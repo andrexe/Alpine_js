@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js Playground</title>
+</head>
+
+<body>
+    <h1>Alpine.js Playground</h1>
+
+    <h2>Alert on click</h2>
+    <!-- x-data tells Alpine to watch this element -->
+    <button x-data x-on:click="alert('Press ok for ok')">
+        Click Me for Alert
+    </button>
+
+    <h2>Toggle text and div display on button press</h2>
+    <!-- We wrap the related elements in a div that stores the variable isShowing initialized as false -->
+    <div x-data="{isShowing: false}">
+
+        <!-- We add a click listener to the button that toggles the isShowing variable - true or false -->
+        <!-- x-text changes the text content within the button based on the value of isShowing -->
+        <button x-on:click="isShowing = !isShowing" x-text="isShowing ? 'Hide' : 'Show'">
+        </button>
+
+        <!-- We assign the isShowing variable to x-show attribute to display it, or not, depending on the variable value -->
+        <div x-show="isShowing">
+            This content should disappear and reappear
+        </div>
+
+    </div>
+
+    <h2>Iterating over a list</h2>
+    <div x-data="{
+        newPerson:'',
+        people: ['Chris', 'Kap', 'Lynne'], 
+
+        // We can create a method within this component
+        add() { this.people.push(this.newPerson)}
+        }">
+
+        <!-- Input to add a person -->
+        <form x-on:submit.prevent="add">
+
+            <!-- Two-way data-binding between the value of the input here and the value of the newPerson variable initialized above -->
+            <input type="text" x-model="newPerson">
+            <button>Add Person</button>
+
+            <!-- The text in this div is updated based on the value of the variable above, which in turn updates based on the input -->
+            <div x-text="newPerson"></div>
+        </form>
+
+        <!-- Loop over people -->
+        <template x-for="person in people">
+            <li><span x-text="person"></span></li>
+        </template>
+
+    </div>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+</body>
+
+</html>
