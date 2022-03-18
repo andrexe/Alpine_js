@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. Installing &amp; x-data</title>
+
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+
+    <h1>1. Installing &amp; x-data</h1>
+    
+    <!-- x-data initializes an Alpine component on the page -->
+    <!-- Inside of x-data is an object that can contain properties, functions, anything -->
+    <div x-data="{ hello: 'world'}">
+
+        <!-- We use x-text with a variable or an expression to fill the element with text -->
+        <p x-text="hello + ' something else'"></p>
+        <p x-text="2 + 2"></p>
+    </div>
+
+</body>
+</html>
