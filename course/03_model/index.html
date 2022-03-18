@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. Model aka data binding</title>
+
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+
+    <h1>3. Model aka data binding</h1>
+
+    <h2>Input field to paragraph data-binding</h2>
+    <!-- x-data contains an empty string variable called name -->
+    <div x-data="{ name: '' }">
+
+        <!-- x-model="name" binds the input to the value of the name variable -->
+        <input type="text" x-model="name">
+
+        <!-- x-text fills the paragraph with the value of the name variable -->
+        <p x-text="name"></p>
+
+        <!-- we can use any expression or property of the variable -->
+        <!-- x-text fills the paragraph with the length the name variable -->
+        <p x-text="name.length"></p>
+
+    </div>
+
+    <h2>Form input field to submission data binding</h2>
+    <!-- x-data contains an empty string variable -->
+    <!-- x-on:submit.prevent prevents the refresh of the page on submitting the form and instead logs the string to the console -->
+    <form x-data="{ string: '' }" x-on:submit.prevent="console.log(string)">
+
+        <!-- x-model binds the input to the string above -->
+        <input type="text" x-model="string">
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <!-- model helps create two-way data binding -->
+    <h2>Two way data-binding</h2>
+
+    <!-- x-data contains element, an empty string -->
+    <!-- x-data also contains a method that takes transforms the element string of this object to uppercase -->
+    <div x-data="{ 
+            element:'',
+            makeElementUppercase() {
+                this.element = this.element.toUpperCase()
+            } 
+            }">
+
+        <!-- x-model binds the input to the element string above -->
+        <input type="text" x-model="element">
+
+        <!-- x-text displays the string as the content of the paragraph -->
+        <p x-text="element"></p>
+
+        <!-- x-on:click calls the method defined in the object above to trigger the conversion of the element to uppercase; this change is reflected everywhere: in the object, in the input and in the paragraph -->
+        <button x-on:click="makeElementUppercase">Uppercase</button>
+
+    </div>
+</body>
+
+</html>
