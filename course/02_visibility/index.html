@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. Visibility</title>
+
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+
+    <h1>2. Visibility</h1>
+
+    <!-- x-show displays the div based on the boolean value of the visible variable -->
+    <div x-data="{ visible: true }">
+        <div x-show="visible">Some content</div>
+    </div>
+
+    <!-- x-show displays the div based on the evaluation of the formula, which uses a previously declared variable, in this case an array -->
+    <div x-data="{ records: [1, 2, 3, 4, 5] }">
+        <div x-show="records.length >= 1">Records has some content</div>
+    </div>
+
+    <!-- Click a button to show some content -->
+    <!-- x-data contains a variable show, initialized as false -->
+    <div x-data="{ show: false }">
+        <!-- x-on:click listens for a click on the button and changes the value of the variable show -->
+        <button x-on:click="show = true">Show</button>
+        <!-- x-show displays the div based on the value of the show variable -->
+        <div x-show="show">
+            Content
+        </div>
+    </div>
+
+    <!-- Turn a button into a toggle -->
+    <div x-data="{ show: false }">
+        <!-- x-on:click listens for a click on the button and changes the value of the variable show to its opposite, allowing for a back and forth toggle -->
+        <button x-on:click="show = !show">Toggle</button>
+        <!-- x-show displays the div based on the value of the show variable -->
+        <div x-show="show">
+            Content
+        </div>
+    </div>
+
+    <!-- Use a button to increment a value and display it -->
+    <div x-data="{ number: 0 }">
+        <!-- x-on:click listens for a click on the button and changes the value of the variable number; it increments up to 10, then resets to 0-->
+        <button x-on:click="number > 9 ? number = 0 : number++">Increment</button>
+        <!-- x-text displays the value of the number variable and updates as it changes -->
+        <div x-text="number">
+        </div>
+        <!-- x-show displays the div based on the value of the show variable -->
+        <div x-show="number >= 5">
+            The number is 5 or greater
+        </div>
+    </div>
+
+</body>
+
+</html>
