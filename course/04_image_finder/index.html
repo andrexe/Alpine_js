@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. Image finder</title>
+
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <h1>4. Image finder</h1>
+
+    <!-- x-data on wrapper div contains the query string used to store the text being searched, an empty img string that will contain the URL of the image result, and a getImage method that updates the img URL to contain the search term(s) -->
+    <div x-data="{
+        query: '',
+        img: '',
+        getImage() {
+            this.img = `https://source.unsplash.com/1600x900/?${this.query}`
+        }
+    }">
+
+    <!-- x-on:submit prevents the normal behavior of the form and instead calls the getImage method described above -->
+        <form x-on:submit.prevent="getImage">
+
+            <!-- x-model binds the input to the query string to be used in the getImage function -->
+            <input type="text" x-model="query">
+
+            <button type="submit">Search</button>
+
+            <!-- x-text displays the contents of the img string for testing purposes -->
+            <span x-text="img"></span>
+
+        </form>
+
+        <!-- x-show only displays the div when there is an image to display -->
+        <div x-show="img">
+
+            <!-- x-bind:src binds the src attribute on the element, which means it pulls in the img variable defined above and attaches the attribute after it has the proper value -->
+            <img x-bind:src="img" style="width: 300px" alt="">
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
