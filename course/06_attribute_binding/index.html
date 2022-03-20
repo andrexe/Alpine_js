@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6. Attribute binding</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="px-6">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">6. Attribute binding</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Simple class binding</h2>
+
+    <!-- x-data contains selected, a boolean variable -->
+    <div x-data="{ selected:false }" >
+
+        <!-- x-bind attaches an attribute, in this case a class, with the value of font-bold to the paragraph, based on the value of the variable defined above -->
+        <p class="text-blue-700" x-bind:class="{ 'font-bold': selected }">Am I bold?</p>
+
+        <!-- x-on:click toggles the boolean value of the variable when clicking the button -->
+        <button x-on:click="selected = !selected" class="rounded-md py-2 px-6 bg-blue-800 hover:bg-blue-700 text-white uppercase tracking-wide font-bold">Bold toggle</button>
+
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Conditionally binding the disabled attribute</h2>
+
+    <!-- x-data contains name, an empty string; x-on:submit creates an alert using the value of name from the input below -->
+    <form x-data="{ name: '' }" x-on:submit.prevent="alert(`Hey ${name}`)">
+
+        <!-- x-model binds the input text to the name variable -->
+        <input type="text" name="" id="" x-model="name" class="border-2 border-gray-300">
+
+        <!-- x-bind attaches the disabled attribute to the button when the field is empty -->
+        <button x-bind:disabled="name === ''" type="submit" class="rounded-md ml-4 py-2 px-6 bg-blue-800 hover:bg-blue-700 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Let's go</button>
+
+    </form>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Binding style for progress bars</h2>
+
+    <!-- x-data starts with a progress variable set to 0 -->
+    <div x-data="{ progress: 0 }">
+
+        <!-- x-bind adds the value attribute to the progress element and assigns the progress variable value to it -->
+        <progress max="100" x-bind:value="progress" class="transition">
+            <span x-text="`${progress}%`"></span>
+        </progress>
+
+        <!-- x-on:click increments the progress variable by 5 every time we click the button -->
+        <button x-on:click="progress = progress + 5" class="rounded-md ml-4 py-2 px-6 bg-blue-800 hover:bg-blue-700 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Increment progress</button>
+
+    </div>
+
+</body>
+</html>
