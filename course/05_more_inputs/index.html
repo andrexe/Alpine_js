@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5. More inputs</title>
+
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+
+    <h1>5. More inputs</h1>
+
+    <h2>Checkboxes</h2>
+
+    <h3>x-model turns checkboxes into a boolean.</h3>
+
+    <!-- x-data initializes with an agreed variable set to false -->
+    <div x-data="{ agreed:false }">
+
+        <!-- x-model binds the checkbox input to the agreed variable defined above and assigns a boolean value depending on the checkbox state -->
+        <input x-model="agreed" type="checkbox" name="" id="">
+
+        <!-- x-show displays the text inside the paragraph depending on the value of the agreed variable -->
+        <p x-show="agreed">You have agreed.</p>
+
+    </div>
+
+    <h3>x-model can store custom values of checkbox inputs into an array</h3>
+    <!-- x-data initializes with an empty users array -->
+    <form x-data="{ 
+        
+        users: [],
+
+        deleteUsers (){
+            console.log(this.users);
+        }
+        }" x-on:submit.prevent="deleteUsers">
+
+        <!-- x-model binds the value of each input to the users array defined above, adding each one to the array when the checkbox is clicked  -->
+        <!-- name & id are optional for the functionality of alpine -->
+        <input type="checkbox" name="record-1" id="record-1" x-model="users" value="1"> Alex
+
+        <input type="checkbox" name="record-2" id="record-2" x-model="users" value="2"> Bill
+
+        <input type="checkbox" name="record-3" id="record-3" x-model="users" value="3"> Candice
+
+        <!-- x-text displays the contents of the users array within the paragraph -->
+        <p x-text="users"></p>
+
+        <button type="submit">Delete</button>
+
+    </form>
+
+    <h2>Dropdowns</h2>
+
+    <h3>"Please choose" dropdown</h3>
+
+    <!-- x-data initializes an empty plan string -->
+    <div x-data="{ plan: '' }">
+
+        <!-- x-model binds the dropdown option to the plan variable defined above -->
+        <select x-model="plan">
+
+            <!-- default "Please choose" option with an empty value -->
+            <option value="">Please choose</option>
+
+            <!-- regular options whose values will be assigned to the plan variable when they are selected -->
+            <option value="yearly">Yearly</option>
+            <option value="monthly">Monthly</option>
+
+        </select>
+
+        <!-- x-show only displays the paragraph when an option has been chose, while x-text uses backticks and interpolation to include the value chosen inside a custom message -->
+        <p x-show="plan" x-text="`You've chosen the ${plan} plan.`"></p>
+
+    </div>
+
+    <h3>Default option dropdown</h3>
+
+    <!-- x-data initializes a plan string with a monthly default option -->
+    <div x-data="{ plan: 'monthly' }">
+
+        <!-- x-model binds the dropdown option to the plan variable defined above -->
+        <select x-model="plan">
+
+            <!-- regular options whose values will be assigned to the plan variable when they are selected -->
+            <option value="yearly">Yearly</option>
+            <option value="monthly">Monthly</option>
+
+        </select>
+
+        <!-- x-show only displays the paragraph when an option has been chosen, while x-text uses backticks and interpolation to include the value chosen inside a custom message -->
+        <p x-show="plan" x-text="`You've chosen the ${plan} plan.`"></p>
+
+    </div>
+
+    <h2>Radio buttons</h2>
+
+     <!-- x-data initializes a plan string with a monthly default option -->
+    <div x-data="{ plan: 'monthly'}">
+
+        <!-- x-model binds the radio inputs to the plan variable just like the select options from the above example -->
+        <input type="radio" name="plan" value="monthly" x-model="plan"> Monthly
+        <input type="radio" name="plan" value="yearly" x-model="plan"> Yearly
+
+        <!-- x-show only displays the paragraph when an option has been chosen, while x-text uses backticks and interpolation to include the value chosen inside a custom message -->
+        <p x-show="plan" x-text="`You've chosen the ${plan} plan.`"></p>
+    </div>
+
+</body>
+
+</html>
