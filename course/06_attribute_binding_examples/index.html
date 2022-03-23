@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6. Attribute binding examples</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">6. Attribute binding examples</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Multiple selection data binding</h2>
+
+    <!-- x-data contains a people array, comprised of objects with two parameters, a number id and a string name -->
+    <!-- x-data also contains a selected empty array to be used when checking the boxes -->
+    <div x-data="{
+        people: [
+            { id: 1, name: 'Alex' },
+            { id: 2, name: 'Bill' },
+            { id: 3, name: 'Candice' }
+        ],
+        selected: []
+    }">
+
+        <!-- x-text displays the selected array, for testing purposes -->
+        <p>Selected: <span x-text="selected"></span></p>
+
+        <!-- x-for person in people in combination with a template element loops over the people array and generates whatever is inside the template for each entry in the array -->
+        <template x-for="person in people">
+
+            <div>
+
+                <!-- x-bind:value binds the id of the person from the people array as the value of the input -->
+                <!-- x-bind:id uses template literals to bind a unique person_# id to each input -->
+                <!-- x-model.number records the checked inputs values into the selected array, after converting them into numbers (they are strings by default) -->
+                <input type="checkbox" x-bind:value="person.id" x-bind:id="`person_${person.id}`"
+                    x-model.number="selected">
+
+                <!-- x-text displays the name value of the person object from the people array within the span element -->
+                <!-- x-bind adds the class font-bold to the span element IF the selected array includes this person's id -->
+                <span x-text="person.name" x-bind:class="{ 'font-bold': selected.includes(person.id) }"></span>
+
+                <!-- x-bind adds the class font-bold to the span element IF the selected array includes this person's id converted to a string - another, less elegant solution, compared using the .number method above to convert the input strings directly into numbers  -->
+                <!-- <span x-text="person.name" x-bind:class="{ 'font-bold': selected.includes(person.id.toString()) }"></span> -->
+            </div>
+
+        </template>
+
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Progress bar</h2>
+
+    <!-- x-data contains a progress number, an increment method that increases progress by 1 as long as it doesn't go over 100, a reset method that assigns 0 to progress and an init method that gets called as soon as the element loads, which calls the increment method every 100ms -->
+    <div x-data="{ 
+        progress: 10,
+        increment() {
+            if (this.progress < 100) {
+                this.progress+=1
+            }
+        },
+        reset() {
+            this.progress = 0;
+        },
+        init() {
+            setInterval(() => {
+                this.increment();
+            }, 100);;
+        }
+    }">
+
+        <!-- progress bar wrapper / background -->
+        <div class="h-4 bg-zinc-200 rounded-full">
+
+            <!-- x-bind and x-text use template literals to bind the value of progress to the width of the element and to display it inside the element -->
+            <div class="h-4 bg-blue-400 text-center text-xs text-white rounded-full transition-all duration-100 ease-linear"
+                x-bind:style="`width: ${progress}%;`" x-text="`${progress}%`"></div>
+
+        </div>
+
+        <!-- x-on:click calls the increment method when pressing the button         -->
+        <button x-on:click="increment()"
+            class="rounded-md m-4 py-2 px-6 bg-blue-800 hover:bg-blue-700 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Increment</button>
+
+        <!-- x-on:click calls the reset method when pressing the button -->
+        <button x-on:click="reset()"
+            class="rounded-md m-4 py-2 px-6 bg-red-700 hover:bg-red-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Reset</button>
+
+    </div>
+
+</body>
+
+</html>
