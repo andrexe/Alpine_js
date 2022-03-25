@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7. Text and HTML</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="px-6">
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">7. Text and HTML</h1>
+    
+    <!-- x-data contains a string called hello -->
+    <div x-data="{ hello: 'Hello world' }">
+
+        <!-- x-text can replace the text inside the element with the hello variable and even apply methods to it, for example to transform it to uppercase -->
+        <h2 x-text="hello.toUpperCase()" class="text-3xl font-bold my-4 leading-relaxed"></h2>
+        
+        <!-- x-text can also replace the text inside the element by evaluating some formula -->
+        <h2 x-text="3 + 5" class="text-3xl font-bold my-4 leading-relaxed"></h2>
+
+    </div>
+
+    <!-- x-data contains a string called body with some html code -->
+    <div x-data="{ body: '<p>Hello</p>' }">
+
+        <!-- x-text can NOT insert html inside an element, the characters will appear just as the code was written -->
+        <div x-text="body"></div>
+
+        <!-- x-html can insert code inside an element and it will get rendered as it should; make sure not to use x-html with user-submitted data, as this becomes a security vulnerability -->
+        <div x-html="body"></div>
+    </div>
+
+</body>
+</html>
