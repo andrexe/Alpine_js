@@ -15,7 +15,7 @@
 - [x] Learn Alpine.js: Text and HTML (9/19)
 - [x] Learn Alpine.js: Project - Markdown parser (10/19)
 - [x] Learn Alpine.js: Looping (11/19)
-- [ ] Learn Alpine.js: x-show vs x-if (12/19)
+- [x] Learn Alpine.js: x-show vs x-if (12/19)
 - [ ] Learn Alpine.js: Event handling (13/19)
 - [ ] Learn Alpine.js: Project - Modal with custom events (14/19)
 - [ ] Learn Alpine.js: $el (15/19)

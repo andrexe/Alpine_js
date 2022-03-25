@@ -122,6 +122,8 @@
                 points: 5
             }
         ],
+
+        // the peopleSortedByPoints GETTER does not have to be accessed as a method, but can be accessed as a property and returns the people array sorted in ascending order
         get peopleSortedByPoints () {
             return this.people.sort((a,b) => a.points - b.points);
         },
@@ -132,11 +134,15 @@
         }
     }">
 
-        <!-- x-for loops through the list of people that has already been sorted by number of points; :key adds a unique identifier based on the id, helping Alpine keep proper track of each element and eliminating potential bugs, without the :key, incrementing would behave oddly when two people have the same number of points -->
+        <!-- x-for loops through the peopleSortedByPoints GETTER, the list of people that has already been sorted by number of points; :key adds a unique identifier based on the id, helping Alpine keep proper track of each element and eliminating potential bugs, without the :key, incrementing would behave oddly when two people have the same number of points -->
         <template x-for="person in peopleSortedByPoints" :key="person.id">
 
             <div>
+                
+                <!-- x-text outputs each person's name and their respective points -->
                 <span x-text="person.name"></span> (<span x-text="person.points"></span> points)
+
+                <!-- x-on:click calls the incrementPoints function on the item with the current id -->
                 <button x-on:click="incrementPoints(person.id)"
                     class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Increment</button>
 
