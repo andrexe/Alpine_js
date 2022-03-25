@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9. Looping</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6">
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">9. Looping</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Array content output</h2>
+
+    <!-- x-data contains a numbers array -->
+    <div x-data="{ 
+        numbers: [1, 2, 3, 4, 5]
+        }">
+
+        <!-- x-for goes over every element in the numbers array and uses the template element to generate a span with each of the numbers in the array  -->
+        <template x-for="number in numbers">
+
+            <!-- x-text replaces the content of the span with the current number in the for loop -->
+            <span x-text="number"></span>
+
+        </template>
+
+    </div>
+
+    <!-- x-data contains a fruits array with 4 strings -->
+    <div x-data="{
+        fruits: ['apple', 'banana', 'orange', 'grapes']
+        }">
+
+        <!-- an ordered list is defined -->
+        <ol class="list-decimal list-inside">
+
+            <!-- x-for loops over each element of the fruits array -->
+            <template x-for="fruit in fruits">
+
+                <!-- x-text replaces the content of each list item generated with the current value of the array element -->
+                <li x-text="fruit"></li>
+            </template>
+        </ol>
+
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Array content + index output</h2>
+
+    <!-- x-data contains a fruits array with 4 strings -->
+    <div x-data="{
+        fruits: ['apple', 'banana', 'orange', 'grapes']
+        }">
+
+        <!-- x-for loops over each element and its index, from the fruits array -->
+        <template x-for="fruit, index in fruits">
+
+            <div>
+
+                <!-- x-text creates a numbered list using the index of the element and the value of each string -->
+                <span x-text="index + 1"></span>: <span x-text="fruit"></span>
+            </div>
+        </template>
+
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Array of objects</h2>
+    <h3 class="text-2xl font-bold my-4 leading-relaxed">Name &amp; id</h3>
+
+    <!-- x-data contains people, an array of objects, each of which has an id and a name -->
+    <div x-data="{
+        people: [
+            {
+                id: 1,
+                name: 'Alex'
+            },
+            {
+                id: 2,
+                name: 'Bill'
+            },
+            {
+                id: 3,
+                name: 'Candice'
+            }
+        ]
+    }">
+
+        <!-- x-for loops over the people array -->
+        <!-- :key adds a unique identifier to each element generated, based on the id property, which will help Alpine keep proper track of them -->
+        <template x-for="person in people" :key="person.id">
+
+            <!-- x-text replaces the text in the div with the name of the current person -->
+            <div x-text="person.name">
+            </div>
+
+        </template>
+
+    </div>
+
+    <h3 class="text-2xl font-bold my-4 leading-relaxed">Name, id &amp; points</h3>
+
+    <!-- x-data contains people, an array of objects, each of which has an id, a name, and a number of points -->
+    <div x-data="{
+        people: [
+            {
+                id: 1,
+                name: 'Alex',
+                points: 1
+            },
+            {
+                id: 2,
+                name: 'Bill',
+                points: 100
+            },
+            {
+                id: 3,
+                name: 'Candice',
+                points: 5
+            }
+        ],
+        get peopleSortedByPoints () {
+            return this.people.sort((a,b) => a.points - b.points);
+        },
+
+        // the incrementPoints method finds the proper object inside the array based on the id and increments the points property 
+        incrementPoints(id) {
+            this.people.find((p) => p.id === id).points++;
+        }
+    }">
+
+        <!-- x-for loops through the list of people that has already been sorted by number of points; :key adds a unique identifier based on the id, helping Alpine keep proper track of each element and eliminating potential bugs, without the :key, incrementing would behave oddly when two people have the same number of points -->
+        <template x-for="person in peopleSortedByPoints" :key="person.id">
+
+            <div>
+                <span x-text="person.name"></span> (<span x-text="person.points"></span> points)
+                <button x-on:click="incrementPoints(person.id)"
+                    class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Increment</button>
+
+            </div>
+
+        </template>
+
+    </div>
+
+
+</body>
+
+</html>
