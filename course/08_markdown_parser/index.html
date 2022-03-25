@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. Markdown Parser</title>
+    <!-- Marked.js - Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">8. Markdown Parser</h1>
+
+    <!-- x-data initializes an empty body string to store the text input, an empty markdown string to store the markdown output, and a preview function that converts the input into markdown using the marked.js parser -->
+    <div x-data="{ 
+        body: '',
+        markdown: '',
+        preview(){
+            // Generate
+            this.markdown = marked.parse(this.body);
+        }
+     }">
+
+        <h3 class="text-2xl font-bold my-4 leading-relaxed">Input</h3>
+
+        <div>
+
+            <!-- x-model binds the input to the body variable -->
+            <textarea x-model="body" cols="30" rows="4" class="border-2"></textarea>
+        </div>
+
+        <!-- x-bind disables the button if the input is empty, while x-on click runs the conversion function when the button is pressed -->
+        <button x-bind:disabled="body === ''" x-on:click="preview" 
+            class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Preview</button>
+
+        <div>
+            <h3 class="text-2xl font-bold my-4 leading-relaxed">Preview</h3>
+            
+            <h4 class="text-xl font-bold my-4 leading-relaxed">x-html rendered</h4>
+
+            <!-- x-html binds the inner html of the element to the markdown variable, allowing the browser to render it -->
+            <div x-html="markdown">
+            </div>
+
+            <!-- x-text does not allow the browser to render the output of the function, showing the code instead -->
+            <h4 class="text-xl font-bold my-4 leading-relaxed">x-text code</h4>
+            <div x-text="markdown">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
