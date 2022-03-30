@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13. Modal with custom events</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">13. Modal with custom events</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Basic example</h2>
+
+    <!-- x-data on the modal wrapper initializes a boolean variable as false; x-show displays the element based on that variable -->
+    <!-- x-on:keyup.escape.window changes the value of the variable to false, closing the modal, when the user presses the escape key -->
+    <!-- the .window method allows the trigger to work even though there is no input field -->
+    <!-- x-on:open-modal.window changes the value of the variable when the open-modal custom event is triggered, this event is dispatched below, on the button element -->
+    <div x-data="{ open: false }" x-show="open" x-on:keyup.escape.window="open = false"
+        x-on:open-modal.window="open = true"
+        class="absolute w-full h-full bg-zinc-800/80 inset-0 flex items-center justify-center">
+
+        <!-- x-on:click.outside listens for a click outside of the actual modal window and closes it when it happens -->
+        <div x-on:click.outside="open = false" class="w-full max-w-sm bg-white shadow-2xl p-8">
+            <p>I'm a modal</p>
+        </div>
+
+    </div>
+
+    <!-- x-data turns the button into an alpine component -->
+    <!-- x-on:click triggers 'open-modal', a custom event, defined above, that opens the modal; this method is applied because we are trying to change a variable from outside the element where that variable was defined -->
+    <button x-data x-on:click="$dispatch('open-modal')"
+        class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Trigger
+        modal</button>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Sending data along with events</h2>
+
+    <!-- x-data initializes a message string to be modified -->
+    <!-- x-on:kebabcase-event updates the message string using the data passed into the details object from the event dispatched on the button below; .window listens for the event being triggered globally on the page -->
+    <div x-data="{ message: 'Abc' }" x-on:kebabcase-event.window="message = $event.detail.message">
+
+        <!-- x-text updates the content of the paragraph based on the value of the message variable -->
+        <p x-text="message"></p>
+    </div>
+
+    <!-- x-data initializes the alpine component -->
+    <!-- x-on:click dispatches an event that cannot contain uppercase letters and also has a "details" object associated with it that can be accessed by other alpine components when the event is triggered -->
+    <button x-data x-on:click="$dispatch('kebabcase-event', {message: 'Hello there'})"
+        class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Send data</button>
+
+</body>
+
+</html>
