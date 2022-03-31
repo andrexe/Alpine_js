@@ -20,6 +20,6 @@
 - [x] Learn Alpine.js: Project - Modal with custom events (14/19)
 - [x] Learn Alpine.js: $el (15/19)
 - [x] Learn Alpine.js: Watching (16/19)
-- [ ] Learn Alpine.js: Project - Hackernews search (17/19)
+- [x] Learn Alpine.js: Project - Hackernews search (17/19)
 - [ ] Learn Alpine.js: Refs (18/19)
 - [ ] Learn Alpine.js: Cloak (19/19)

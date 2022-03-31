@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15. watching</title>
+    <!-- Marked.js - Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">Hackernews search</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Search using alpine &amp; hackernews API</h2>
+
+    <!-- x-data contains an empty query string that will contain search terms, an empty results array, that will contain the results sent back by the API -->
+    <!-- performSearch method takes the query string as an argument and uses native js fetch and template literals to send a request to the hackernews search API, takes the response as json, then assigns the list of results from the hits array of the data that came back to the results array that we defined -->
+    <!-- init() watches the query string for any changes and runs the search every time it changes, unless the query is empty, in which case it clears all the results and returns without performing the search -->
+    <div x-data="{
+            query: '',
+            results: [],
+
+            performSearch (query) {
+                fetch(`http://hn.algolia.com/api/v1/search?query=${query}`)
+                .then(response => response.json())
+                .then(results => this.results = results.hits)
+            },
+
+            init() {
+                this.$watch('query', (query) => {
+                    if(query === '') {
+                        this.results = [];
+                        return
+                    }
+                    this.performSearch(query)
+                })
+            }
+        }">
+
+        <!-- x-model binds the typed text to the query string sent to the search API, while debounce allows for a delay while typing to prevent sending a request after every single character typed -->
+        <input type="text" x-model.debounce="query" class="border">
+
+        <!-- x-show displays the feedback paragraph only when query isn't empty, when you search for something -->
+        <!-- x-text displays the search term and the number of results in the feedback paragraph -->
+        <p x-show="query.length">
+            Your search for <span x-text="query"></span> returned <span x-text="results.length"></span> results
+        </p>
+
+        <div>
+            <!-- x-for iterates through each element in the results array -->
+            <!-- :key binds each element generated to its objectID that it comes with, to help alpine properly keep track of them -->
+            <template x-for="result in results" :key="result.objectID">
+                <div>
+
+                    <!-- x-text displays the title of the result inside the header -->
+                    <h4 x-text="result.title" class="text-xl font-bold my-4 leading-relaxed"></h4>
+                    <!-- x-bind:href binds the result url to the href attribute of the anchor tag to create a link, while x-text displays the link -->
+                    <a x-bind:href="result.url" x-text="result.url" class="text-blue-600"></a>
+
+                </div>
+            </template>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
