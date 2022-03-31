@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14. $el</title>
+    <!-- Marked.js - Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">$el</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Basic $el example</h2>
+
+    <!-- x-data turns the div into an alpine component -->
+    <!-- x-init logs the current element object to the console when the document loads -->
+    <!-- x-text shows how html interprets that -->
+    <div x-data x-init="console.log($el)" x-text="$el">
+    </div>
+
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Instant markdown output</h2>
+
+    <!-- x-data turns the div into an alpine component -->
+    <!-- x-init uses the marked parser to manipulate the markdown contents of the div (innerHTML) and replace it with the proper, converted HTML code equivalent of that markdown -->
+    <div x-data x-init="$el.innerHTML = marked.parse($el.innerText)">
+        This is ***markdown***
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">?</h2>
+
+    <!-- x-data turns the div into an alpine component -->
+    <!-- x-on:click uses vanilla js to add the innerText of the div to the clipboard -->
+    <div x-data x-on:click="window.navigator.clipboard.writeText($el.innerText)">
+        123456789
+    </div>
+    
+    <!-- x-data turns the input into an alpine component -->
+    <!-- x-on:click uses vanilla js to add the value of the input to the clipboard and $el.select() also selects all the text when it is clicked and copied -->
+    <input type="text" value="987654321" x-data x-on:click="window.navigator.clipboard.writeText($el.value); $el.select()" class="border-2">
+
+</body>
+
+</html>
