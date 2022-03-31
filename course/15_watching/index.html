@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15. watching</title>
+    <!-- Marked.js - Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">watching</h1>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Basic watch example</h2>
+
+    <!-- x-data contains a message string for testing purposes, and an init method that runs when the page is loaded; the init method watches the message string for changes and when that happens, it logs changed + the new value of the string to the console -->
+    <div x-data="{
+
+            message:'Hello',
+            init(){
+                 this.$watch('message', (value) => {
+                     console.log('changed', value);
+                 })
+            }
+        }"
+    >
+
+        <!-- x-text displays the content of the message string inside the span -->
+        <span x-text="message"></span>
+
+        <!-- x-on:click changes the message when the button is pressed -->
+        <button x-on:click="message = 'Something else'"
+            class="rounded-md m-4 py-2 px-6 bg-blue-800 hover:bg-blue-700 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Change message</button>
+    </div>
+
+    
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Practical search watch example</h2>
+
+    <!-- x-data contains an empty query string, an empty results array, a performSearch method that updates the results array, and an init method that watches the query string for changes and runs the search method using the query as an argument -->
+    <div 
+        x-data="{
+            query: '',
+            results: [],
+
+            performSearch() {
+                this.results = [
+                    'apple', 'banana', 'grapes'
+                ]
+            },
+
+            init() {
+                this.$watch('query', (query) => {
+                    this.performSearch(query)
+                })
+            }
+        }">
+
+        <!-- x-model allows two way binding between the input and the query string -->
+        <input type="text" x-model="query" class="border">
+
+        <!-- x-text displays the results inside the paragraph -->
+        <p x-text="results"></p>
+
+    </div>
+</body>
+
+</html>
