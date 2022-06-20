@@ -43,15 +43,16 @@
     <h2 class="text-3xl font-bold my-4 leading-relaxed">Practical search watch example</h2>
 
     <!-- x-data contains an empty query string, an empty results array, a performSearch method that updates the results array, and an init method that watches the query string for changes and runs the search method using the query as an argument -->
+    <!-- the performSearch method takes the query argument and goes through a (manually declared for the example) list of potential results, and filters this list to only show complete or partial matches to the query from the input field -->
     <div 
         x-data="{
             query: '',
             results: [],
 
-            performSearch() {
+            performSearch(query) {
                 this.results = [
                     'apple', 'banana', 'grapes'
-                ]
+                ].filter(i => i.toLowerCase().includes(query.toLowerCase()))
             },
 
             init() {

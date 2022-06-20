@@ -18,7 +18,7 @@
     <h2 class="text-3xl font-bold my-4 leading-relaxed">Simple click event on button</h2>
 
     <!-- x-on:click outputs clicked in the console when the user clicks the button -->
-    <button x-data x-on:click="console.log('clicked')"
+    <button x-data x-on:click="console.log('clicked button')"
         class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Click
         me</button>
 
@@ -35,7 +35,7 @@
     <h2 class="text-3xl font-bold my-4 leading-relaxed">More complex key press events</h2>
 
     <!-- x-on:submit.prevent prevents the default form behavior and instead logs 'submitted' to the console when the form is submitted -->
-    <form x-data x-on:sumbit.prevent="console.log('submitted')">
+    <form x-data x-on:submit.prevent="console.log('submitted')">
 
         <!-- x-data contains a boolean variable shiftHeld used to keep track of the user holding down the shift key -->
         <!-- x-on:keydown.shift & x-on:keyup.shift use custom Alpine event listeners to update the value of the shiftHeld boolean -->
