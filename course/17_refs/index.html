@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17. refs</title>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">17. Refs</h1>
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Refs basic example</h2>
+
+    <!-- x-data turns the div into an alpine component -->
+    <!-- x-init showcases the functionality of $refs, by logging one of the elements to the console using its reference (in this case greeting) -->
+    <div x-data x-init="console.log($refs.greeting)">
+
+        <!-- x-ref gives a unique identifier to the element, which can be used within the Alpine component to reference / access it, similar to getElementByID -->
+        <div x-ref="greeting">Hello</div>
+        <div x-ref="another">Another</div>
+
+        <!-- x-text displays the another element on the page for testing purposes -->
+        <div x-text="$refs.another"></div>
+    </div>
+
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">
+        File chooser &amp; image preview
+    </h2>
+
+    <!-- x-data turns the form into an alpine component -->
+    <!-- imagePreview initialized as null, will contain the image URL after the previewImage method is run -->
+    <form x-data="{
+        imagePreview: null,
+        previewImage() {
+
+            // for testing, logging changed to the console to see when the method is run and this.$refs.image.files[0] to see the file that was uploaded and its details
+            console.log('changed');
+            console.log(this.$refs.image.files[0]);
+
+            // 1. this creates a File Reader
+            const reader = new FileReader()
+
+            // 3. after the reader reads the file as a data URL, this callback sets the imagePreview we declared above to the result, i.e. the file URL
+            reader.onload = (e) => this.imagePreview = e.target.result
+
+            // 2. the reader grabs the URL of the first file in the image element i.e. the input field (file chooser)
+            reader.readAsDataURL(this.$refs.image.files[0])
+        }
+    }">
+
+        <!-- x-if only displays the template containing the image preview when imagePreview is true, i.e. when there is something to display -->
+        <template x-if="imagePreview">
+            <div>
+
+                <!-- x-bind:src assigns the url from the imagePreview generated through the previewImage method above -->
+                <img x-bind:src="imagePreview" class="max-w-md">
+
+            </div>
+        </template>
+
+        <!-- x-on:change calls the previewImage method created above when this input is changed i.e. when a file is chosen -->
+        <!-- x-ref adds the image unique identifier to this input -->
+        <input type="file" x-on:change="previewImage" x-ref="image" />
+    </form>
+</body>
+
+</html>
