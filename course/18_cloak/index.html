@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>18. cloak</title>
+    <!-- Marked.js - Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+    <!-- Notice the @3.x.x in the provided CDN link. This will pull the latest version of Alpine version 3.  -->
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* if we set display:none on x-cloak as a style, all alpine components with the x-cloak attribute will be invisible by default, this style will be removed once Alpine initializes */
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="px-6 m-0">
+
+    <h1 class="text-4xl font-bold my-4 leading-relaxed">18. Cloak</h1>
+    <h2 class="text-3xl font-bold my-4 leading-relaxed">Basic cloak example</h2>
+
+    <div x-data="{
+        show: false
+    }">
+
+        <div x-show="show">This content flickers</div>
+
+        <!-- x-cloak is there before Alpine initializes, but is removed once Alpine initializes -->
+        <div x-show="show" x-cloak>This content never flickers</div>
+
+        <!-- x-on click toggles the visibility of the elements above by changing the show boolean -->
+        <button x-on:click="show = !show" class="rounded-md my-4 py-2 px-6 bg-blue-700 hover:bg-blue-600 text-white uppercase tracking-wide font-bold disabled:bg-gray-400">Toggle visibility</button>
+
+    </div>
+
+</body>
+
+</html>
